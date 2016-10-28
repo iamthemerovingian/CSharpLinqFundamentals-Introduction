@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LinqIntroMili
 {
@@ -11,8 +13,31 @@ namespace LinqIntroMili
     {
         public static void Main(string[] args)
         {
-            QueryEmployees();
-            QueryTypes();
+            //QueryEmployees();
+            //QueryTypes();
+            QueryXML();
+        }
+
+        private static void QueryXML()
+        {
+            XDocument doc = new XDocument(
+                new XElement("Processes",
+                from p in Process.GetProcesses()
+                orderby p.ProcessName ascending
+                select new XElement("Process",
+                    new XAttribute("Name", p.ProcessName),
+                    new XAttribute("PID", p.Id))));
+
+            IEnumerable<int> pid =
+                from e in doc.Elements("Processes").Elements("Process")
+                where e.Attribute("Name").Value == "devenv"
+                orderby (int)e.Attribute("PID") ascending
+                select (int)e.Attribute("PID");
+
+            foreach (var item in pid)
+            {
+                Console.WriteLine(item);
+            }
         }
 
         private static void QueryTypes()
