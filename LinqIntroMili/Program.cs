@@ -1,14 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LinqIntroMili
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
+        {
+            QueryEmployees();
+            QueryTypes();
+        }
+
+        private static void QueryTypes()
+        {
+            IEnumerable<string> publicTypes =
+                from t in Assembly.GetExecutingAssembly().GetTypes()
+                where t.IsPublic
+                select t.FullName;
+
+            foreach (var process in publicTypes)
+            {
+                Console.WriteLine(process);
+            }
+        }
+
+        private static void QueryEmployees()
         {
             IEnumerable<Employee> employees = new List<Employee>()
             {
