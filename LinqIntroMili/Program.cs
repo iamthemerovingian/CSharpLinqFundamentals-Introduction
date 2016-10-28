@@ -30,7 +30,7 @@ namespace LinqIntroMili
 
         private static void QueryEmployees()
         {
-            IEnumerable<Employee> employees = new List<Employee>()
+            List<Employee> employees = new List<Employee>()
             {
                 new Employee {ID=1, Name="Scott", HireDate=new DateTime(2002,3,5) },
                 new Employee {ID=2, Name="Poonam", HireDate=new DateTime(2002,10,15) },
@@ -42,6 +42,15 @@ namespace LinqIntroMili
                 where e.HireDate.Year < 2005
                 orderby e.HireDate
                 select e;
+
+            Console.WriteLine("-------------before adding-----------");
+            foreach (var employee in query)
+            {
+                Console.WriteLine(employee.Name);
+            }
+
+            employees.Add(new Employee { ID = 4, Name = "Linda", HireDate = new DateTime(2003, 6, 11) });
+            Console.WriteLine("-------------After Adding adding-----------");
 
             foreach (var employee in query)
             {
