@@ -15,7 +15,13 @@ namespace LinqIntroMili
         {
             //QueryEmployees();
             //QueryTypes();
-            QueryXML();
+            //QueryXML();
+            QuerySqlServer();
+        }
+
+        private static void QuerySqlServer()
+        {
+            
         }
 
         private static void QueryXML()
